@@ -116,8 +116,50 @@ SELECT col1 + col2 total, col3
 
 * Note: While aliasing tables is the most common use case. It can also be used to alias the columns selected to have the resulting table reflect a more readable name.
 ```
-Select t1.column1 aliasname, t2.column2 aliasname2
+SELECT t1.column1 aliasname, t2.column2 aliasname2
 FROM tablename AS t1
 JOIN tablename2 AS t2
 ```
+
+JOIN Part-1 Quiz Answers:
++ Q1:
+```
+SELECT a.name, a.primary_poc poc, w.channel channel, w.occurred_at occurred_at
+FROM accounts AS a
+JOIN web_events AS w
+ON w.account_id = a.id
+WHERE a.name = 'Walmart'
+;
+```
++ Q2:
+```
+SELECT r.name region, s.name rep, a.name account
+FROM region r
+JOIN sales_reps s
+ON r.id = s.region_id
+JOIN accounts a
+ON a.sales_rep_id = s.id
+ORDER BY a.name ASC (Note: Ascending is the default sort so don't need to have it explicitly)
+;
+```
++ Q3
+```
+SELECT r.name region, a.name account, (o.total_amt_usd/(o.total + 0.01)) unit_price
+FROM orders o
+JOIN accounts a
+ON a.id = o.account_id
+JOIN sales_reps s
+ON s.id = a.sales_rep_id
+JOIN region r
+ON r.id = s.region_id
+;
+```
+* NOTE: traditional databases __do not__ allow for many-to-many relationships, as these break the schema down pretty quickly. See [here](https://stackoverflow.com/questions/7339143/why-no-many-to-many-relationships) for detailed discussion.
+  + https://www.quora.com/My-senior-told-me-to-avoid-many-to-many-relationships-in-database-design-when-possible-because-it-creates-complications-that-are-avoidable-He-had-a-hard-time-giving-concrete-examples-why-would-he-say-that
+  + https://www.dataversity.net/more-database-design-errors-confusion-with-many-to-many-relationships/#
+  + https://www.reddit.com/r/Database/comments/al8rop/why_exactly_area_manytomany_relationships_bad/
+  + https://dzone.com/articles/how-to-handle-a-many-to-many-relationship-in-datab
+  + https://blog.supportgroup.com/getting-started-with-relational-databases-one-to-one-and-many-to-many-relationships
+  + https://rstsaygili.medium.com/many-to-many-relationships-in-relational-databases-af867547914f
+
 
