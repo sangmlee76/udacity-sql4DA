@@ -242,7 +242,7 @@ WHERE (name LIKE 'C%' OR name LIKE 'W%')
 ```
 
 #### SQL query command order matters:
-The order of the key words does matter!
+The order of the key words matter!
 ```
 SELECT col1, col2
 FROM table1
