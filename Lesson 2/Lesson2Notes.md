@@ -201,8 +201,7 @@ ON r.id = s.region_id
 JOIN accounts a
 ON s.id = a.sales_rep_id
 WHERE r.name = 'Midwest'
-ORDER BY a.name
-;
+ORDER BY a.name;
 ```
 
 + Q2:
@@ -215,8 +214,7 @@ JOIN accounts a
 ON s.id = a.sales_rep_id
 WHERE r.name = 'Midwest'
 AND s.name LIKE 'S%'
-ORDER BY a.name
-;
+ORDER BY a.name;
 ```
 
 + Q3:
@@ -229,8 +227,7 @@ JOIN accounts a
 ON s.id = a.sales_rep_id
 WHERE r.name = 'Midwest'
 AND s.name LIKE '% K%'
-ORDER BY a.name
-;
+ORDER BY a.name;
 ```
 
 + Q4:
@@ -243,16 +240,46 @@ JOIN accounts a
 ON s.id = a.sales_rep_id
 JOIN orders o
 ON a.id = o.account_id
-AND o.standard_qty > 100    // can use WHERE instead of AND in this last line to filter
+AND o.standard_qty > 100;    // can use WHERE instead of AND in this last line to filter - they are interchangeable
 ```
 
 + Q5:
-
+```
+SELECT r.name region, a.name account, (o.total_amt_usd/(o.total+0.01)) unit_price
+FROM region r
+JOIN sales_reps s
+ON r.id = s.region_id
+JOIN accounts a
+ON s.id = a.sales_rep_id
+JOIN orders o
+ON a.id = o.account_id
+AND (o.standard_qty > 100 AND o.poster_amt_usd > 50)
+ORDER BY unit_price;
+```
 
 + Q6:
-
+```
+SELECT r.name region, a.name account, (o.total_amt_usd/(o.total+0.01)) unit_price
+FROM region r
+JOIN sales_reps s
+ON r.id = s.region_id
+JOIN accounts a
+ON s.id = a.sales_rep_id
+JOIN orders o
+ON a.id = o.account_id
+AND (o.standard_qty > 100 AND o.poster_amt_usd > 50)
+ORDER BY unit_price DESC;
+```
 
 + Q7:
-
+```
+SELECT DISTINCT a.name account, w.channel channel, a.id account_id
+FROM accounts a
+JOIN web_events w
+ON a.id = w.account_id
+AND a.id = 1001;
+```
 
 + Q8:
+```
+
