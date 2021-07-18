@@ -155,11 +155,33 @@ ON r.id = s.region_id
 ;
 ```
 * NOTE: traditional databases __do not__ allow for many-to-many relationships, as these break the schema down pretty quickly. See [here](https://stackoverflow.com/questions/7339143/why-no-many-to-many-relationships) for detailed discussion.
-  + https://www.quora.com/My-senior-told-me-to-avoid-many-to-many-relationships-in-database-design-when-possible-because-it-creates-complications-that-are-avoidable-He-had-a-hard-time-giving-concrete-examples-why-would-he-say-that
-  + https://www.dataversity.net/more-database-design-errors-confusion-with-many-to-many-relationships/#
-  + https://www.reddit.com/r/Database/comments/al8rop/why_exactly_area_manytomany_relationships_bad/
-  + https://dzone.com/articles/how-to-handle-a-many-to-many-relationship-in-datab
-  + https://blog.supportgroup.com/getting-started-with-relational-databases-one-to-one-and-many-to-many-relationships
-  + https://rstsaygili.medium.com/many-to-many-relationships-in-relational-databases-af867547914f
+  + [Quora](https://www.quora.com/My-senior-told-me-to-avoid-many-to-many-relationships-in-database-design-when-possible-because-it-creates-complications-that-are-avoidable-He-had-a-hard-time-giving-concrete-examples-why-would-he-say-that)
+  + [Dataversity](https://www.dataversity.net/more-database-design-errors-confusion-with-many-to-many-relationships/#)
+  + [Reddit](https://www.reddit.com/r/Database/comments/al8rop/why_exactly_area_manytomany_relationships_bad/)
+  + [dzone.com](https://dzone.com/articles/how-to-handle-a-many-to-many-relationship-in-datab)
+  + [supportgroup.com](https://blog.supportgroup.com/getting-started-with-relational-databases-one-to-one-and-many-to-many-relationships)
+  + [medium article](https://rstsaygili.medium.com/many-to-many-relationships-in-relational-databases-af867547914f)
+
+#### Left and Right JOINs
+For visualization of JOINs, use Venn diagrams where the cirlcles represent the tables.
+
++ Inner JOIN visualization:
+![Inner Join](InnerJoin.png)
+  + here the yellow circle in the Venn diagram corresponds to the the Orders table; the green circle, Accounts table
+
++ Left, Right, and Outer JOINs visualization:
+![Types of Joins](TypesOfJoins.png)
+  + Note: If there is not matching information in the JOINed table, then you will have columns with empty cells. These empty cells introduce a new data type called NULL.
+
++ `PINS` Left and Right JOINS are interchangeable, depends on which table comes first in order to set up the data you want. See below:
+
+![Left Join](LeftJoin.png)
+
+![Rigth Join](RightJoin.png)
+
+  + The above two tables return the same results, we just changed the position of the Accounts table. In the LEFT JOIN (top) query, Accounts is the left table. In the RIGHT JOIN (bottom) query, Accounts is the right table. This works since Accounts table is the table that has the extra data set that is __not__ in the orders table and the intent of these queries is to get the data that is not found within both tables (e.g. results from an INNER JOIN).
+  + As a general practice, we use `LEFT JOIN` since it is interchangeable with RIGHT JOIN. Just make sure that the table that has the extra data that you want to grab is in the left table position for the query.
+
+
 
 
