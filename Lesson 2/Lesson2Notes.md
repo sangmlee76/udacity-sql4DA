@@ -121,7 +121,7 @@ FROM tablename AS t1
 JOIN tablename2 AS t2
 ```
 
-JOIN Part-1 Quiz Answers:
+#### JOIN Part-1 Quiz Answers:
 + Q1:
 ```
 SELECT a.name, a.primary_poc poc, w.channel channel, w.occurred_at occurred_at
@@ -182,6 +182,77 @@ For visualization of JOINs, use Venn diagrams where the cirlcles represent the t
   + The above two tables return the same results, we just changed the position of the Accounts table. In the LEFT JOIN (top) query, Accounts is the left table. In the RIGHT JOIN (bottom) query, Accounts is the right table. This works since Accounts table is the table that has the extra data set that is __not__ in the orders table and the intent of these queries is to get the data that is not found within both tables (e.g. results from an INNER JOIN).
   + As a general practice, we use `LEFT JOIN` since it is interchangeable with RIGHT JOIN. Just make sure that the table that has the extra data that you want to grab is in the left table position for the query.
 
+#### Full Outer Join
+This will return the inner join result set, as well as any unmatched rows from __either of the two tables being joined__.
+
+Again this returns rows that do not match one another from the two tables. The use cases for a __full outer join are very rare__.
+
++ `FULL OUTER JOIN` is same as `OUTER JOIN` (e.g. they are synonymous)
++ [Full Outer Join Example](https://www.w3resource.com/sql/joins/perform-a-full-outer-join.php)
 
 
+#### JOIN Part-2 Quiz Answers:
++ Q1:
+```
+SELECT r.name region, s.name salesrep, a.name account
+FROM region r
+JOIN sales_reps s
+ON r.id = s.region_id
+JOIN accounts a
+ON s.id = a.sales_rep_id
+WHERE r.name = 'Midwest'
+ORDER BY a.name
+;
+```
 
++ Q2:
+```
+SELECT r.name region, s.name salesrep, a.name account
+FROM region r
+JOIN sales_reps s
+ON r.id = s.region_id
+JOIN accounts a
+ON s.id = a.sales_rep_id
+WHERE r.name = 'Midwest'
+AND s.name LIKE 'S%'
+ORDER BY a.name
+;
+```
+
++ Q3:
+```
+SELECT r.name region, s.name salesrep, a.name account
+FROM region r
+JOIN sales_reps s
+ON r.id = s.region_id
+JOIN accounts a
+ON s.id = a.sales_rep_id
+WHERE r.name = 'Midwest'
+AND s.name LIKE '% K%'
+ORDER BY a.name
+;
+```
+
++ Q4:
+```
+SELECT r.name region, a.name account, (o.total_amt_usd/(o.total+0.01)) unit_price
+FROM region r
+JOIN sales_reps s
+ON r.id = s.region_id
+JOIN accounts a
+ON s.id = a.sales_rep_id
+JOIN orders o
+ON a.id = o.account_id
+AND o.standard_qty > 100    // can use WHERE instead of AND in this last line to filter
+```
+
++ Q5:
+
+
++ Q6:
+
+
++ Q7:
+
+
++ Q8:

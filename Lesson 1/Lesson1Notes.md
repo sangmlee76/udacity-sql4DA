@@ -61,7 +61,7 @@ LIMIT 10;
 #### ORDER BY clause
 The `ORDER BY` statement allows us to sort our results using the data in any column. If you are familiar with Excel or Google Sheets, using ORDER BY is similar to sorting a sheet using a column.
 
-The O`RDER BY` statement always comes in a query after the `SELECT` and `FROM` statements, but before the `LIMIT` statement. If you are using the `LIMIT` statement, it will always appear last.
+The `ORDER BY` statement always comes in a query after the `SELECT` and `FROM` statements, but before the `LIMIT` statement. If you are using the `LIMIT` statement, it will always appear last.
 
 Remember `DESC` can be added after the column in your ORDER BY statement to sort in descending order, as the default is to sort in ascending order.
 ```
