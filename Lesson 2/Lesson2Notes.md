@@ -240,7 +240,7 @@ JOIN accounts a
 ON s.id = a.sales_rep_id
 JOIN orders o
 ON a.id = o.account_id
-AND o.standard_qty > 100;    // can use WHERE instead of AND in this last line to filter - they are interchangeable
+WHERE o.standard_qty > 100;    // can use WHERE instead of AND in this last line to filter - they are interchangeable
 ```
 
 + Q5:
@@ -253,7 +253,7 @@ JOIN accounts a
 ON s.id = a.sales_rep_id
 JOIN orders o
 ON a.id = o.account_id
-AND (o.standard_qty > 100 AND o.poster_amt_usd > 50)
+WHERE (o.standard_qty > 100 AND o.poster_amt_usd > 50)
 ORDER BY unit_price;
 ```
 
@@ -267,19 +267,29 @@ JOIN accounts a
 ON s.id = a.sales_rep_id
 JOIN orders o
 ON a.id = o.account_id
-AND (o.standard_qty > 100 AND o.poster_amt_usd > 50)
+WHERE (o.standard_qty > 100 AND o.poster_amt_usd > 50)
 ORDER BY unit_price DESC;
 ```
 
 + Q7:
+  + Note: `SELECT DISTINCT` narrows results to unique values
 ```
 SELECT DISTINCT a.name account, w.channel channel, a.id account_id
 FROM accounts a
 JOIN web_events w
 ON a.id = w.account_id
-AND a.id = 1001;
+WHERE a.id = 1001;
 ```
 
 + Q8:
 ```
+SELECT DISTINCT o.occurred_at occurred, a.name account, o.total total_order, o.total_amt_usd order_total_amt
+FROM accounts a
+JOIN orders o
+ON o.account_id = a.id
+WHERE o.occurred_at BETWEEN '01-01-2015' AND '01-01-2016'
+ORDER BY o.occurred_at DESC;
+```
 
+#### Other JOINS to consider
+There are a few more advanced JOINs that we did not cover here, and they are used in very specific use cases. [UNION and UNION ALL](https://www.w3schools.com/sql/sql_union.asp), [CROSS JOIN](https://www.w3resource.com/sql/joins/cross-join.php), and the tricky [SELF JOIN](https://www.w3schools.com/sql/sql_join_self.asp); they are useful in special cases.
