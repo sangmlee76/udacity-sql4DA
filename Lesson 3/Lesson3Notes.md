@@ -89,3 +89,41 @@ SELECT year,
        (west + south)/2 AS south_west_avg
   FROM tutorial.us_housing_units
   ```
+
+#### MIN and MAX statements
+`MIN` and `MAX` are aggregators that again ignore NULL values.
+
+Functionally, MIN and MAX are similar to COUNT in that they __can be used on non-numerical columns__. Depending on the column type, MIN will return the lowest number, earliest date, or non-numerical value as early in the alphabet as possible. As you might suspect, MAX does the opposite—it returns the highest number, the latest date, or the non-numerical value closest alphabetically to “Z.”
+
+#### AVG statement
+`AVG` returns the mean of the data - that is the sum of all of the values in the column divided by the number of values in a column. This aggregate function again ignores the NULL values in both the numerator and the denominator.
+
+If you want to count NULLs as zero, you will need to use SUM and COUNT. However, this is probably __not a good idea__ if the NULL values truly just represent unknown values for a cell.
+
+One quick note that a median might be a more appropriate measure of center for this data, but finding the __median__ happens to be a pretty difficult thing to get using SQL alone — so difficult that finding a median is occasionally asked as an interview question.
+
++ Finding the `Median` value
+```
+SELECT *
+FROM (SELECT total_amt_usd
+      FROM orders
+      ORDER BY total_amt_usd
+      LIMIT 3457) AS Table1
+ORDER BY total_amt_usd DESC
+LIMIT 2;
+```
+Since there are 6912 orders - we want the average of the 3457 and 3456 order amounts when ordered. This is the average of 2483.16 and 2482.55. This gives the median of 2482.855. This obviously isn't an ideal way to compute. If we obtain new orders, we would have to change the limit. SQL didn't even calculate the median for us. __The above used a SUBQUERY, but you could use any method to find the two necessary values, and then you just need the average of them.__
+
+#### GROUP BY statement
++ `GROUP BY` can be used to aggregate data within subsets of the data. For example, grouping for different accounts, different regions, or different sales representatives.
+
++ (Key Concept) __Any column in the SELECT statement that is not within an aggregator must be in the GROUP BY clause.__
+
++ The `GROUP BY` __always goes between__ `WHERE` and `ORDER BY`.
+
++ `ORDER BY` works like `SORT` in spreadsheet software.
+
++ SQL evaluates the aggregations __before__ the `LIMIT` clause. If you don’t group by any columns, you’ll get a 1-row result—no problem there. __If you group by a column with enough unique values that it exceeds the LIMIT number, the aggregates will be calculated, and then some rows will simply be omitted from the results.__
+
+This is actually a nice way to do things because you know you’re going to get the correct aggregates. If SQL cuts the table down to 100 rows, then performed the aggregations, your results would be substantially different.
+
