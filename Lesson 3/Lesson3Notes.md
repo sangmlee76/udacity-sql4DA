@@ -127,3 +127,31 @@ Since there are 6912 orders - we want the average of the 3457 and 3456 order amo
 
 This is actually a nice way to do things because you know you’re going to get the correct aggregates. If SQL cuts the table down to 100 rows, then performed the aggregations, your results would be substantially different.
 
+```
+SELECT a.name, MIN(total_amt_usd) smallest_order
+FROM accounts a
+JOIN orders o
+ON a.id = o.account_id
+GROUP BY a.name
+ORDER BY smallest_order;
+```
+
+```
+SELECT r.name, COUNT(*) num_reps
+FROM region r
+JOIN sales_reps s
+ON r.id = s.region_id
+GROUP BY r.name
+ORDER BY num_reps;
+```
+
++ You can `GROUP BY` multiple columns at once; __this is often useful to aggregate across a number of different segments__.
+
++ The order of columns listed in the `ORDER BY` clasue __does__ make a difference. You are ordering the columns from left to right.
+
++ The order of column names in the `GROUP BY` clause __does not__ matter - the result will be the same regardless.
+
++ You can substitute numbers for column names in the `GROUP BY` clause. Its generally recommended to do this only when y ou're grouping many columns.
+
++ __(Key Concept - again)__ Any column that is not within an aggregation must show up in your GROUP BY statement. It should return an error but it may run and give erroneous results.
+
